@@ -59,5 +59,21 @@ export const updateUserById = async (id: number, userUpdate: UserUpdate): Promis
   };
 
   DB[index] = updatedUser;
+
   return updatedUser;
+};
+
+export  const deleteUserById = async (id: number): Promise<User | null> => {
+  const index = DB.findIndex((user) => user.id === id);
+
+  if (index === -1) {
+    return null;
+  }
+
+  const dbUser = DB[index];
+
+  // delete
+  delete DB[index];
+
+  return dbUser;
 };

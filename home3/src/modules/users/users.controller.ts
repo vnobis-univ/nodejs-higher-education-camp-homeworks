@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 
-import { listUsers, readUserById, createUser, updateUserById } from "./db";
+import { listUsers, readUserById, createUser, updateUserById, deleteUserById } from "./users.repository";
 
 const router: Router = Router();
 
@@ -14,7 +14,12 @@ router.get("/users", async (req: Request, res: Response) => {
 router.get("/users/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const user = await readUserById(id);
-  res.json(user);
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ error: 'User with such ID does\'t exist' });
+  }
 });
 
 //     should have "create user" endpoint with username as a required parameter
@@ -29,7 +34,24 @@ router.put("/users/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const updatedUserData = req.body;
   const user = await updateUserById(id, updatedUserData);
-  res.json(user);
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ error: 'User with such ID does\'t exist' });
+  }
+});
+
+//      should have "delete user by id" endpoint
+router.delete("/users/:id", async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const user = await deleteUserById(id);
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ error: 'User with such ID does\'t exist' });
+  }
 });
 
 export default router;

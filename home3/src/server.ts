@@ -11,7 +11,7 @@
 
 import express, { json, urlencoded, Express } from "express";
 
-import userAPI from "./user";
+import userAPI from "./modules/users/users.controller";
 
 const PORT = 8081;
 
