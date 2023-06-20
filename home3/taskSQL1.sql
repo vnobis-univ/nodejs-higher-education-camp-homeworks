@@ -30,3 +30,18 @@ CREATE TABLE ConcertCategories (
     FOREIGN KEY (concert_id) REFERENCES Concerts(id),
     FOREIGN KEY (category_id) REFERENCES Categories(id)
 );
+
+CREATE TABLE Visitors (
+    id INTEGER PRIMARY KEY,
+    email TINYTEXT NOT NULL,
+    age INTEGER
+);
+
+-- Should we have Visitors per concert???
+CREATE TABLE ConcertVisitors (
+    id INTEGER PRIMARY KEY,
+    concert_id INTEGER,
+    visitor_id INTEGER,
+    FOREIGN KEY (concert_id) REFERENCES Concerts(id),
+    FOREIGN KEY (visitor_id) REFERENCES Visitors(id)
+);
